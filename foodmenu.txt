@@ -22,6 +22,21 @@ mysql> select * from food;
 |      8 | Grilled beef steak |  7500 |      3 |
 +--------+--------------------+-------+--------+
 8 rows in set (0.00 sec)
+
+mysql> select * from orders;
++---------+------------+------+-------+------------+--------+
+| orderid | sale_date  | qty  | price | totalprice | foodid |
++---------+------------+------+-------+------------+--------+
+|       1 | 2020-07-01 |   10 |  1500 |      15000 |      1 |
+|       2 | 2020-07-02 |    8 |  2000 |      16000 |      3 |
+|       3 | 2020-07-02 |   12 |  5000 |      60000 |      5 |
+|       4 | 2020-07-03 |   15 |  6000 |      90000 |      6 |
+|       5 | 2020-07-03 |    6 |  7000 |      42000 |      7 |
+|       6 | 2020-07-04 |   10 |  7500 |      75000 |      8 |
+|       7 | 2020-07-04 |   20 |  2600 |      52000 |      2 |
+|       8 | 2020-07-04 |   10 |  1500 |      15000 |      1 |
++---------+------------+------+-------+------------+--------+
+8 rows in set (0.03 sec)
 mysql> update food
     -> set price='2000'
     -> where foodid='3';
@@ -112,3 +127,36 @@ mysql> select name from food order by menuid;
 | Grilled beef steak |
 +--------------------+
 8 rows in set (0.00 sec)
+mysql> select name,totalprice from food,orders where totalprice in (select max(totalprice) from orders) and food.foodid=orders.foodid;
++------------------+------------+
+| name             | totalprice |
++------------------+------------+
+| Mermaid Cocktail |      90000 |
++------------------+------------+
+1 row in set (0.00 sec)
+mysql> select name,totalprice from food,orders where totalprice in (select min(totalprice) from orders) and food.foodid=orders.foodid;
++------------+------------+
+| name       | totalprice |
++------------+------------+
+| Ice Coffee |      15000 |
+| Ice Coffee |      15000 |
++------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select sale_date,sum(totalprice) from orders group by sale_date;
++------------+-----------------+
+| sale_date  | sum(totalprice) |
++------------+-----------------+
+| 2020-07-01 |           15000 |
+| 2020-07-02 |           76000 |
+| 2020-07-03 |          132000 |
+| 2020-07-04 |          142000 |
++------------+-----------------+
+4 rows in set (0.00 sec)
+mysql> select sum(totalprice) from orders where sale_date between '2020-7-2' and '2020-7-5';
++-----------------+
+| sum(totalprice) |
++-----------------+
+|          350000 |
++-----------------+
+1 row in set (0.03 sec)
