@@ -1,0 +1,114 @@
+mysql> select * from menu;
++--------+--------+------------------+
+| menuid | name   | description      |
++--------+--------+------------------+
+|      1 | Drink  | Non-alchol drink |
+|      2 | Alchol | Alchol drink     |
+|      3 | Steak  | Beef steak       |
++--------+--------+------------------+
+3 rows in set (0.03 sec)
+
+mysql> select * from food;
++--------+--------------------+-------+--------+
+| foodid | name               | price | menuid |
++--------+--------------------+-------+--------+
+|      1 | Ice Coffee         |  1500 |      1 |
+|      2 | Bubble Tea         |  2600 |      1 |
+|      3 | Milk Shake         |  1500 |      1 |
+|      4 | Sunset Cocktail    |  4500 |      2 |
+|      5 | Witch Cocktail     |  5000 |      2 |
+|      6 | Mermaid Cocktail   |  6000 |      2 |
+|      7 | Rib beef steak     |  7000 |      3 |
+|      8 | Grilled beef steak |  7500 |      3 |
++--------+--------------------+-------+--------+
+8 rows in set (0.00 sec)
+mysql> update food
+    -> set price='2000'
+    -> where foodid='3';
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from food;
++--------+--------------------+-------+--------+
+| foodid | name               | price | menuid |
++--------+--------------------+-------+--------+
+|      1 | Ice Coffee         |  1500 |      1 |
+|      2 | Bubble Tea         |  2600 |      1 |
+|      3 | Milk Shake         |  2000 |      1 |
+|      4 | Sunset Cocktail    |  4500 |      2 |
+|      5 | Witch Cocktail     |  5000 |      2 |
+|      6 | Mermaid Cocktail   |  6000 |      2 |
+|      7 | Rib beef steak     |  7000 |      3 |
+|      8 | Grilled beef steak |  7500 |      3 |
++--------+--------------------+-------+--------+
+8 rows in set (0.03 sec)
+
+mysql> select min(price) as smallestprice
+    -> from food;
++---------------+
+| smallestprice |
++---------------+
+|          1500 |
++---------------+
+1 row in set (0.06 sec)
+
+mysql> select max(price) as largestprice
+    -> from food;
++--------------+
+| largestprice |
++--------------+
+|         7500 |
++--------------+
+1 row in set (0.00 sec)
+mysql> select count(foodid) from food;
++---------------+
+| count(foodid) |
++---------------+
+|             8 |
++---------------+
+1 row in set (0.05 sec)
+
+mysql> select avg(price) from food;
++------------+
+| avg(price) |
++------------+
+|  4512.5000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(price) from food;
++------------+
+| sum(price) |
++------------+
+|      36100 |
++------------+
+1 row in set (0.00 sec)
+mysql> select name from food order by price desc;
++--------------------+
+| name               |
++--------------------+
+| Grilled beef steak |
+| Rib beef steak     |
+| Mermaid Cocktail   |
+| Witch Cocktail     |
+| Sunset Cocktail    |
+| Bubble Tea         |
+| Milk Shake         |
+| Ice Coffee         |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> select name from food order by menuid;
++--------------------+
+| name               |
++--------------------+
+| Ice Coffee         |
+| Bubble Tea         |
+| Milk Shake         |
+| Sunset Cocktail    |
+| Witch Cocktail     |
+| Mermaid Cocktail   |
+| Rib beef steak     |
+| Grilled beef steak |
++--------------------+
+8 rows in set (0.00 sec)
